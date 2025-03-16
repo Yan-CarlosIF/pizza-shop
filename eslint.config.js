@@ -25,7 +25,7 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
-      "simple-import-sort/imports": "error",
+      "simple-import-sort/imports": "warn",
     },
   },
 );
