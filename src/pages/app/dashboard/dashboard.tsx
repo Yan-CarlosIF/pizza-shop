@@ -1,6 +1,8 @@
 import { Helmet } from "react-helmet-async";
 
 import DashboardCard from "./dashboard-card";
+import PopularProductsChart from "./pupular-products-chart";
+import RevenueChart from "./revenue-chart";
 
 const Dashboard = () => {
   return (
@@ -14,6 +16,11 @@ const Dashboard = () => {
           <DashboardCard title="Pedidos" dateType="mês" icon="utensils" />
           <DashboardCard title="Pedidos" dateType="dia" icon="utensils" />
           <DashboardCard title="Cancelamentos" dateType="mês" />
+        </div>
+
+        <div className="grid grid-cols-9 gap-4">
+          <RevenueChart />
+          <PopularProductsChart />
         </div>
       </div>
     </>
