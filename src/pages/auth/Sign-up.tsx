@@ -8,6 +8,8 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { RegisterRestaurant } from "@/api/register-restaurant";
 
 const signUpForm = z.object({
   restaurantName: z.string().nonempty("O nome do restaurante é obrigatório."),
@@ -29,16 +31,25 @@ const SignUp = () => {
     resolver: zodResolver(signUpForm),
   });
 
+  const { mutateAsync: registerRestaurant } = useMutation({
+    mutationFn: RegisterRestaurant,
+  });
+
   const handleSignIn = async (data: SignInForm) => {
     try {
-      console.log(data);
+      await registerRestaurant({
+        RestaurantName: data.restaurantName,
+        ManagerName: data.managerName,
+        email: data.email,
+        phone: data.phone,
+      });
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       toast.success("Restaurante cadastrado com sucesso!", {
         action: {
           label: "login",
-          onClick: () => navigate("/sign-in"),
+          onClick: () => navigate(`/sign-in?email=${data.email}`),
         },
       });
     } catch {
