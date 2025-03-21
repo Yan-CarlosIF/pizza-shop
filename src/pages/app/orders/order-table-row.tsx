@@ -5,22 +5,21 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
 
 import OrderDetails from "./order-details";
+import OrderStatus from "@/components/order-status";
+import { priceFormatter } from "@/utils/price-formatter";
+import { dateFormatter } from "@/utils/date-formatter";
 
-// interface OrderTableRowProps {
-//   id: number;
-//   date: string;
-//   status: string;
-//   customer: string;
-//   total: string;
-// }
+interface OrderTableRowProps {
+  order: {
+    orderId: string;
+    createdAt: string;
+    status: "pending" | "canceled" | "processing" | "delivering" | "delivered";
+    customerName: string;
+    total: number;
+  };
+}
 
-const OrderTableRow = (/*{
-   id,
-//   date,
-//   status,
-//   customer,
-//   total,
-// }: OrderTableRowProps*/) => {
+const OrderTableRow = ({ order }: OrderTableRowProps) => {
   return (
     <TableRow>
       <TableCell>
@@ -35,16 +34,19 @@ const OrderTableRow = (/*{
           <OrderDetails />
         </Dialog>
       </TableCell>
-      <TableCell className="font-mono text-xs font-medium">1</TableCell>
-      <TableCell className="text-muted-foreground">há 15 minutos</TableCell>
-      <TableCell>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-slate-400"></span>
-          <span className="text-muted-foreground font-medium">Pendente</span>
-        </div>
+      <TableCell className="font-mono text-xs font-medium">
+        {order.orderId}
       </TableCell>
-      <TableCell className="font-medium">Yan Carlos de Oliveira</TableCell>
-      <TableCell className="font-medium">R$ 100,00</TableCell>
+      <TableCell className="text-muted-foreground">
+        {dateFormatter(order.createdAt)}
+      </TableCell>
+      <TableCell>
+        <OrderStatus status={order.status} />
+      </TableCell>
+      <TableCell className="font-medium">{order.customerName}</TableCell>
+      <TableCell className="font-medium">
+        {priceFormatter(order.total)}
+      </TableCell>
       <TableCell>
         <Button variant="outline" size="xs">
           <ArrowRight className="h-3 w-3" />
