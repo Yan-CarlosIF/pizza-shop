@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-type OrderStatus =
+export type OrderStatus =
   | "pending"
   | "canceled"
   | "processing"
