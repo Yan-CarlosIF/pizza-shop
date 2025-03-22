@@ -8,6 +8,7 @@ import OrderDetails from "./order-details";
 import OrderStatus from "@/components/order-status";
 import { priceFormatter } from "@/utils/price-formatter";
 import { dateFormatter } from "@/utils/date-formatter";
+import { useState } from "react";
 
 interface OrderTableRowProps {
   order: {
@@ -20,10 +21,12 @@ interface OrderTableRowProps {
 }
 
 const OrderTableRow = ({ order }: OrderTableRowProps) => {
+  const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="xs">
               <Search className="h-3 w-3" />
@@ -31,7 +34,7 @@ const OrderTableRow = ({ order }: OrderTableRowProps) => {
             </Button>
           </DialogTrigger>
 
-          <OrderDetails />
+          <OrderDetails open={isDetailsOpen} orderId={order.orderId} />
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
@@ -45,7 +48,7 @@ const OrderTableRow = ({ order }: OrderTableRowProps) => {
       </TableCell>
       <TableCell className="font-medium">{order.customerName}</TableCell>
       <TableCell className="font-medium">
-        {priceFormatter(order.total)}
+        {priceFormatter(order.total / 100)}
       </TableCell>
       <TableCell>
         <Button variant="outline" size="xs">
