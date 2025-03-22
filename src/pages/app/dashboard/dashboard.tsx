@@ -1,8 +1,11 @@
 import { Helmet } from "react-helmet-async";
 
-import DashboardCard from "./dashboard-card";
 import PopularProductsChart from "./pupular-products-chart";
 import RevenueChart from "./revenue-chart";
+import { MonthRevenueCard } from "./month-revenue-card";
+import { MonthOrdersAmountCard } from "./month-orders-amount-card";
+import { DayOrdersAmountCard } from "./day-orders-amount-card";
+import { MonthCanceledOrdersAmountCard } from "./month-canceled-orders-amount-card";
 
 const Dashboard = () => {
   return (
@@ -12,10 +15,10 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
 
         <div className="grid grid-cols-4 gap-4">
-          <DashboardCard title="Receita total" dateType="mês" />
-          <DashboardCard title="Pedidos" dateType="mês" icon="utensils" />
-          <DashboardCard title="Pedidos" dateType="dia" icon="utensils" />
-          <DashboardCard title="Cancelamentos" dateType="mês" />
+          <MonthRevenueCard />
+          <MonthOrdersAmountCard />
+          <DayOrdersAmountCard />
+          <MonthCanceledOrdersAmountCard />
         </div>
 
         <div className="grid grid-cols-9 gap-4">
