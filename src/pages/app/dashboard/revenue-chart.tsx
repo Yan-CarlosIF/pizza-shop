@@ -15,18 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-const data = [
-  { date: "10/12", revenue: 1200 },
-  { date: "11/12", revenue: 200 },
-  { date: "12/12", revenue: 120 },
-  { date: "13/12", revenue: 12 },
-  { date: "14/12", revenue: 100 },
-  { date: "15/12", revenue: 20 },
-  { date: "16/12", revenue: 2 },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getDailyRevenueInPeriod } from "@/api/get-daily-revenue-in-period";
 
 const RevenueChart = () => {
+  const { data: dailyRevenueInPeriod } = useQuery({
+    queryKey: ["metrics", "daily-revenue-in-period"],
+    queryFn: getDailyRevenueInPeriod,
+  });
+
   return (
     <Card className="col-span-6">
       <CardHeader className="flex-row items-center justify-between pb-8">
@@ -38,33 +35,35 @@ const RevenueChart = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={240}>
-          <LineChart data={data} style={{ fontSize: 12 }}>
-            <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
+        {dailyRevenueInPeriod && (
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={dailyRevenueInPeriod} style={{ fontSize: 12 }}>
+              <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
 
-            <YAxis
-              stroke="#888"
-              axisLine={false}
-              tickLine={false}
-              width={80}
-              tickFormatter={(value: number) =>
-                value.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })
-              }
-            />
+              <YAxis
+                stroke="#888"
+                axisLine={false}
+                tickLine={false}
+                width={80}
+                tickFormatter={(value: number) =>
+                  value.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })
+                }
+              />
 
-            <CartesianGrid vertical={false} className="stroke-muted" />
+              <CartesianGrid vertical={false} className="stroke-muted" />
 
-            <Line
-              type="linear"
-              strokeWidth={2}
-              dataKey="revenue"
-              stroke={colors.violet[400]}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+              <Line
+                type="linear"
+                strokeWidth={2}
+                dataKey="receipt"
+                stroke={colors.violet[400]}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   );
