@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getMonthCanceledOrdersAmount } from "@/api/get-month-canceled-orders-amount";
 import { twMerge } from "tailwind-merge";
+import MetricCardSkeleton from "./metric-card-skeleton";
 
 export function MonthCanceledOrdersAmountCard() {
   const { data: MonthCanceledOrdersAmount } = useQuery({
@@ -20,7 +21,7 @@ export function MonthCanceledOrdersAmountCard() {
         <DollarSign className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="flex flex-col gap-1.5">
-        {MonthCanceledOrdersAmount && (
+        {MonthCanceledOrdersAmount ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {MonthCanceledOrdersAmount.amount.toLocaleString("pt-BR")}
@@ -39,6 +40,8 @@ export function MonthCanceledOrdersAmountCard() {
               em relação ao mês passado
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>

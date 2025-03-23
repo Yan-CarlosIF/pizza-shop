@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getDayOrdersAmount } from "@/api/get-day-orders-amount";
 import { twMerge } from "tailwind-merge";
+import MetricCardSkeleton from "./metric-card-skeleton";
 
 export function DayOrdersAmountCard() {
   const { data: dayOrdersAmount } = useQuery({
@@ -18,7 +19,7 @@ export function DayOrdersAmountCard() {
         <Utensils className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="flex flex-col gap-1.5">
-        {dayOrdersAmount && (
+        {dayOrdersAmount ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {dayOrdersAmount.amount.toLocaleString("pt-BR")}
@@ -37,6 +38,8 @@ export function DayOrdersAmountCard() {
               em relação a ontem
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>

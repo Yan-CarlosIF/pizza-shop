@@ -5,6 +5,7 @@ import { getMonthRevenue } from "@/api/ger-month-revenue";
 import { useQuery } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
 import { priceFormatter } from "@/utils/price-formatter";
+import MetricCardSkeleton from "./metric-card-skeleton";
 
 export function MonthRevenueCard() {
   const { data: monthRevenue } = useQuery({
@@ -21,7 +22,7 @@ export function MonthRevenueCard() {
         <DollarSign className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent className="flex flex-col gap-1.5">
-        {monthRevenue && (
+        {monthRevenue ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {priceFormatter(monthRevenue.receipt / 100)}
@@ -40,6 +41,8 @@ export function MonthRevenueCard() {
               em relação ao mês passado
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>

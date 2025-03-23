@@ -1,4 +1,4 @@
-import { BarChart } from "lucide-react";
+import { BarChart, Loader2 } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import colors from "tailwindcss/colors";
 
@@ -31,7 +31,7 @@ const PopularProductsChart = () => {
         </div>
       </CardHeader>
       <CardContent>
-        {popularProducts && (
+        {popularProducts ? (
           <ResponsiveContainer width="100%" height={240}>
             <PieChart style={{ fontSize: 12 }}>
               <Pie
@@ -88,6 +88,10 @@ const PopularProductsChart = () => {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex h-[240px] w-full items-center justify-center">
+            <Loader2 className="text-muted-foreground h-8 w-8 animate-spin" />
+          </div>
         )}
       </CardContent>
     </Card>

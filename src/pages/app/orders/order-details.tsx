@@ -18,6 +18,7 @@ import { getOrderDetails } from "@/api/get-order-details";
 import OrderStatus from "@/components/order-status";
 import { dateFormatter } from "@/utils/date-formatter";
 import { priceFormatter } from "@/utils/price-formatter";
+import OrderDetailsSkeleton from "./order-details-skeleton";
 
 interface OrderDetailsProps {
   open: boolean;
@@ -40,7 +41,7 @@ const OrderDetails = ({ orderId, open }: OrderDetailsProps) => {
         <DialogDescription>Detalhes do pedido</DialogDescription>
       </DialogHeader>
 
-      {order && (
+      {order ? (
         <div className="space-y-6">
           <Table>
             <TableBody>
@@ -127,6 +128,8 @@ const OrderDetails = ({ orderId, open }: OrderDetailsProps) => {
             </TableFooter>
           </Table>
         </div>
+      ) : (
+        <OrderDetailsSkeleton />
       )}
     </DialogContent>
   );
